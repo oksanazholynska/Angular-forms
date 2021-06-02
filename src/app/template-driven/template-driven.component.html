@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Template-driven forms</h2>
+  <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input #email="ngModel" type="email" email required matInput [(ngModel)]="user.email" name="email" class="form-input" id="email">
+      <mat-error *ngIf="email?.hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="email?.hasError('email')">
+        Email is incorrect
+      </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput #password="ngModel" minlength="3" maxlength="8" type="password" required [(ngModel)]="user.password" name="password" class="form-input" id="password" />
+        <mat-error *ngIf="password.hasError('required')">
+          Field password is required
+        </mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">
+          Filed password can't be less than 3 symbol
+        </mat-error>
+        <mat-error *ngIf="password.hasError('maxlength')">
+          Filed password can't be more than 8 symbol
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button class="button submit__button " [disabled]="!userForm.form.valid" type="submit" mat-raised-button color="accent">Submit</button>
+    <button class="button" type="reset" (click)="cleanButtonClicked()" mat-raised-button color="warn">Reset</button>
+  </form>
+</div>
+

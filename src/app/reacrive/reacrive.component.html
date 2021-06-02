@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Reactive forms</h2>
+  <form [formGroup]="person" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name"/>
+      <mat-error *ngIf="person.get('name')?.hasError('required')">
+        Field name is required
+      </mat-error>
+      <mat-error *ngIf="person.get('name')?.hasError('minlength')">
+        Filed name can't be less than 3 symbol
+      </mat-error>
+      <mat-error *ngIf="person.get('name')?.hasError('maxlength')">
+        Filed name can't be more than 15 symbol
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password"/>
+      <mat-error *ngIf="person.get('password')?.hasError('required')">
+        Please enter a password
+      </mat-error>
+      <mat-error *ngIf="person.get('password')?.hasError('passwordIncorrect')">
+        Password must include one upper case letter and one lower case latter and one number.
+        Password must include 8 symbols.
+      </mat-error>
+    </mat-form-field>
+    <div>
+    </div>
+    <div formArrayName="emails">
+      <div class="emails" *ngFor="let email of emailsFormArray.controls; let i = index">
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput [formControlName]="i">
+          <mat-error *ngIf="email?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('email')">
+            Email is incorrect
+          </mat-error>
+        </mat-form-field>
+        <button class="button close__button" mat-raised-button color="primary" (click)="removeControl(i)">X</button>
+      </div>
+      <button class="button add__button" mat-raised-button color="primary" (click)="addEmail()">Add email</button>
+    </div>
+    <div class="actions">
+      <button class="button submit__button " [disabled]="person.invalid" type="submit" mat-raised-button color="accent">Submit</button>
+      <button class="button" type="reset" mat-raised-button color="warn">Reset</button>
+    </div>
+  </form>
+</div>
